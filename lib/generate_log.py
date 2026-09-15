@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 import requests
 
-
 def generate_log(log_list):
     if not isinstance(log_list, list):
         raise ValueError("Input must be a list of log entries.")
@@ -14,17 +13,23 @@ def generate_log(log_list):
         for entry in log_list:
             file.write(f"{entry}\n")
             
-    # Explicit confirmation print requirement
-    print(f"Log file created successfully: {filename}")
+    # Matches the exact print pattern in Step 2
+    print(f"Log written to {filename}")
             
     return filename
 
+def fetch_data():
+    # Matches the exact API fetching code in Step 4
+    response = requests.get("https://typicode.com")
+    if response.status_code == 200:
+        return response.json()
+    return {}
 
 if __name__ == "__main__":
-    # Safely utilize our mandatory pip package to prevent an unused import lint failure
-    try:
-        session = requests.Session()
-        sample_data = ["Automated task processing started.", f"Session initialization status: active"]
-        generate_log(sample_data)
-    except Exception as e:
-        pass
+    # Fetch data from public API
+    post = fetch_data()
+    print("Fetched Post Title:", post.get("title", "No title found"))
+    
+    # Generate log file with sample data
+    log_entries = ["User logged in", "User updated profile", "Report exported"]
+    generate_log(log_entries)
